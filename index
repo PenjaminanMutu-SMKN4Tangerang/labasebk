@@ -251,7 +251,7 @@
             <h3>Pengaturan Portal</h3>
             <label style="font-size: 0.8rem; color: #94a3b8; display: block; margin-bottom: 8px;">URL Web App Google
                 Apps Script:</label>
-            <input type="text" id="gasUrl" placeholder="https://script.google.com/macros/s/.../exec">
+            <input type="text" id="gasUrl" placeholder="https://script.google.com/a/macros/guru.smk.belajar.id/s/AKfycbzH7bJFxW3Jzu8efeurqA2Xdccbz_tPWtQ-TX9pgE6T50UcfUdbiBIW7-V-rrhrmXPR/exec">
             <button class="save-btn" onclick="saveConfig()">Simpan Konfigurasi</button>
             <button onclick="toggleModal()"
                 style="margin-top:10px; background:transparent; border:none; color:#94a3b8; cursor:pointer; width:100%;">Tutup</button>
