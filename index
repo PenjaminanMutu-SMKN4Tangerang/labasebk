@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Catatan Kasus Siswa - SMKN 4 Tangerang</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #a855f7;
+            --bg: #0f172a;
+            --text: #f8fafc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-image:
+                radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.15) 0%, transparent 40%);
+        }
+
+        .portal-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            padding: 40px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: slideUp 1s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo-box {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 25px;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .logo-box img {
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.5));
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .enter-btn {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 40px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .enter-btn:hover {
+            transform: scale(1.03);
+            background: var(--secondary);
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.4);
+        }
+
+        .config-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .config-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        /* Modal Settings */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #1e293b;
+            padding: 32px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-content h3 {
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            margin-bottom: 20px;
+            font-family: inherit;
+        }
+
+        .save-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--primary);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="portal-container">
+        <div class="badge">E-COUNSELING SYSTEM</div>
+        <div class="logo-box">
+            <!-- Gunakan URL Logo SMKN 4 yang stabil -->
+            <img src="https://instagram.fcgk22-1.fna.fbcdn.net/v/t51.2885-19/352378771_277559741399945_6587754107496706088_n.jpg?stp=dst-jpg_s320x320_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby40MzMuYzIifQ&_nc_ht=instagram.fcgk22-1.fna.fbcdn.net&_nc_cat=105&_nc_oc=Q6cZ2QGd4fJ6YL1G17rt1kUr1iYzhghSXS9Q--0tcxCJcmAWYwLcbD3CPBq38WqVlY0Z9_I&_nc_ohc=haDtgduS0hkQ7kNvwEiTGPf&_nc_gid=cDsxyOjETUe5LiVY4aDpxg&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Aft8dsrvJN9ruJNoIzMAoy52us6zlqLTL_R_UIyP4qMzSw&oe=69866769&_nc_sid=8b3546"
+                alt="SMKN 4 Tangerang">
+        </div>
+        <h1>SMKN 4 Tangerang</h1>
+        <p>Aplikasi Digital Buku Catatan Kasus Siswa untuk memudahkan pengelolaan bimbingan konseling dan kesiswaan.</p>
+
+        <button onclick="enterApp()" class="enter-btn">
+            <span>Masuk ke Dashboard</span>
+            <i class="fas fa-arrow-right"></i>
+        </button>
+    </div>
+
+    <button class="config-btn" onclick="toggleModal()">
+        <i class="fas fa-cog"></i>
+    </button>
+
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <h3>Pengaturan Portal</h3>
+            <label style="font-size: 0.8rem; color: #94a3b8; display: block; margin-bottom: 8px;">URL Web App Google
+                Apps Script:</label>
+            <input type="text" id="gasUrl" placeholder="https://script.google.com/macros/s/.../exec">
+            <button class="save-btn" onclick="saveConfig()">Simpan Konfigurasi</button>
+            <button onclick="toggleModal()"
+                style="margin-top:10px; background:transparent; border:none; color:#94a3b8; cursor:pointer; width:100%;">Tutup</button>
+        </div>
+    </div>
+
+    <script>
+        // Load URL yang tersimpan
+        window.onload = function () {
+            const savedUrl = localStorage.getItem('app_scrip_url');
+            if (savedUrl) {
+                document.getElementById('gasUrl').value = savedUrl;
+            }
+        };
+
+        function toggleModal() {
+            document.getElementById('settingsModal').classList.toggle('active');
+        }
+
+        function saveConfig() {
+            const url = document.getElementById('gasUrl').value.trim();
+            if (url) {
+                localStorage.setItem('app_scrip_url', url);
+                alert('Konfigurasi Berhasil Disimpan!');
+                toggleModal();
+            } else {
+                alert('Tolong masukkan URL yang valid');
+            }
+        }
+
+        function enterApp() {
+            const url = localStorage.getItem('app_scrip_url');
+            if (url) {
+                window.location.href = url;
+            } else {
+                alert('Silakan masukkan URL Apps Script di menu Pengaturan (ikon gear) terlebih dahulu.');
+                toggleModal();
+            }
+        }
+    </script>
+</body>
+
+</html>
